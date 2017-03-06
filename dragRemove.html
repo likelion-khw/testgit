@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>드래그로 삭제하기</title>
+    <script src="src/jquery-3.1.1.min.js"></script>
+    <style type="text/css">
+    #remove {
+        width: 100px;
+        border: 1px red solid;
+    }
+    </style>
+    <script type="text/javascript">
+    (function($) {
+        var target;
+
+        function itr() {
+            var item = $('#drop');
+            var remove = $('#remove');
+
+            item.on('dragstart', function(e) {
+                target = $(e.target);
+            });
+
+            remove.on('dragover', function(e) {
+            	e.preventDefault();
+            })
+            remove.on('drop', function() {
+                $(target).remove();
+            });
+        };
+
+        $(document).ready(function() {
+            itr();
+        });
+    })(jQuery)
+    </script>
+</head>
+
+<body>
+    <div id="drop">
+        <ul>
+            <li id="item1" draggable="true">라면</li>
+            <li id="item2" draggable="true">과자</li>
+            <li id="item3" draggable="true">공기</li>
+            <li id="item4" draggable="true">사방</li>
+            <li id="item5" draggable="true">유리</li>
+            <li id="item6" draggable="true">책상</li>
+        </ul>
+    </div>
+    <div id="remove">
+        <ul>제거하기</ul>
+    </div>
+</body>
+
+</html>
