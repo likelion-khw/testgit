@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script src="src/jquery-3.1.1.min.js"></script>
+    <title>현재위치 지속 조회</title>
+    <script type="text/javascript">
+    (function($) {
+        var id;
+
+        function success(position) {
+            //x와 y의 좌표
+            $('div').html("내위치 위도 == " + position.coords.latitude + "<br>내위치 경도 == " + position.coords.longitude); // 경도
+            //나중에는 여기에 구글맵을 보여주기할꺼임
+        };
+
+        function error(err) {
+            $('div').text("조회실패 == " + err.code);
+        };
+
+        $(document).ready(function() {
+
+            $('#start').on('click', function() {
+                id = window.navigator.geolocation.watchPosition(success, error, {
+                    enableHighAccuracy: true, // 정확도는 최대한으로 높이게
+                    maximumAge: 0 // 가장 최근의 정보를 가져와라
+                });
+                //첫 함수는 성공, 둘함수는 실패. callback 메소드
+            }); // start end
+
+            $('#stop').on('click', function() {
+                window.navigator.geolocation.clearWatch(id);
+                $('div').text('중단되었습니다');
+            }); // stop end
+        });
+    })(jQuery)
+    </script>
+</head>
+
+<body>
+    <button id="start">위치추적 시작</button>
+    <button id="stop">추적 중단</button>
+    <div></div>
+</body>
+
+</html>
